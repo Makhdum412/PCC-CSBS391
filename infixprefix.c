@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include<ctype.h>
 #define MAX_SIZE 30
-
+#include<string.h>
 char stack[MAX_SIZE];
 int top = -1;
 
@@ -56,15 +56,15 @@ int main() {
             i++;
         } else if (isalnum(infix[i])) {  // Check for alphanumeric characters
             prefix[j++] = infix[i++];
-        } else if (infix[i] == '(') {
-            push(infix[i++]);
         } else if (infix[i] == ')') {
-            while ((ch = pop()) != '(') {
+            push(infix[i++]);
+        } else if (infix[i] == '(') {
+            while ((ch = pop()) != ')') {
                 prefix[j++] = ch;
             }
             i++;
         } else {  // Handle operators
-            while (top != -1 && pri(stack[top]) >= pri(infix[i])) {
+            while (top != -1 && pri(stack[top]) > pri(infix[i])) {
                 prefix[j++] = pop();
             }
             push(infix[i++]);
